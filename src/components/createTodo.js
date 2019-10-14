@@ -1,15 +1,40 @@
 import React, { Component } from 'react';
-
+import axios from 'axios';
 export default class CreateTodo extends Component {
     state={
         description:'',
         responsible:'',
         priority:'',
         completed:false,
+        todos:[],
     };
+
+    componentDidMount(){
+        axios.get('http://localhost:4000/todos/').then(resp=>{
+        this.setState({
+            todos:resp.data,
+        });
+        console.log('todos', this.state.todos);
+        console.log('resp', resp);
+        console.log('resp.data', resp.data);
+        }).catch(function(err){
+          console.log(err);
+        });
+    }
+
     handleSubmit=(e)=>{
         e.preventDefault();
-
+        
+        const newTodo = {
+            todo_description: this.state.description,
+            todo_responsible: this.state.responsible,
+            todo_priority: this.state.priority,
+            todo_completed: this.state.completed,
+        }
+        axios.post('http://localhost:4000/todos/add',newTodo)
+             .then(resp=>{
+            //    console.log(resp.data);
+            })
         this.setState({
             description:'',
             responsible:'',
@@ -18,7 +43,7 @@ export default class CreateTodo extends Component {
         })
     }
 
-    handleDescrition=(e)=>{
+    handleDescription=(e)=>{
          this.setState({description:e.target.value});
     }
 
@@ -40,7 +65,7 @@ render(){
                     <input type="text" 
                             className="form-control"
                             value={this.state.description} 
-                            onChange={this.handleDescrition}/>
+                            onChange={this.handleDescription}/>
                 </div>
                 <div>
                     <label>Responsible</label>

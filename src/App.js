@@ -27,12 +27,16 @@ class App extends Component {
                 <li className="nav-item ">
                 <Link to="/create" className="nav-link" href="#">CreateTodo </Link>
                 </li>
+                <li className="nav-item">
+                  <Link to="/all" className="nav-link" href="#">Todo List</Link>
+                </li>
               </ul>
           </div>
       </nav>
       <Route path="/" exact  component={TodosList} />
       <Route path="/edit/:id" exact component={EditTodo} />
       <Route path="/create" exact component={CreateTodo} />
+      <Route path="/all" exact component={TodosList} />
       </div>
       </Router>
       );
