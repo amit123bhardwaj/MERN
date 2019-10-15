@@ -27,9 +27,6 @@ class App extends Component {
                 <li className="nav-item ">
                 <Link to="/create" className="nav-link" href="#">CreateTodo </Link>
                 </li>
-                <li className="nav-item">
-                  <Link to="/all" className="nav-link" href="#">Todo List</Link>
-                </li>
               </ul>
           </div>
       </nav>

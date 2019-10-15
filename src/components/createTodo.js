@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Button } from 'antd';
+import TodosList from './todosList';
 export default class CreateTodo extends Component {
     state={
         description:'',
@@ -7,6 +9,8 @@ export default class CreateTodo extends Component {
         priority:'',
         completed:false,
         todos:[],
+        images:[],
+        currentFile:undefined,
     };
 
     componentDidMount(){
@@ -31,7 +35,8 @@ export default class CreateTodo extends Component {
             todo_priority: this.state.priority,
             todo_completed: this.state.completed,
         }
-        axios.post('http://localhost:4000/todos/add',newTodo)
+        const files=this.state.images;
+        axios.post('http://localhost:4000/todos/add',newTodo,files)
              .then(resp=>{
             //    console.log(resp.data);
             })
@@ -53,6 +58,9 @@ export default class CreateTodo extends Component {
 
    handlePriority=(e)=>{
     this.setState({priority:e.target.value});
+   }
+   handleFileChange=(e)=>{
+    this.setState({currentFile:e.target.files[0]});
    }
 
 
@@ -104,7 +112,9 @@ render(){
                   <input type="submit" value="Submit" className="btn btn-primary" />
                 </div>
             </form>
-            
+            {/* <input type="file" value={this.state.currentFile} onChange={this.handleFileChange}>Choose file</input> */}
+            <TodosList todos={this.state.todos}/>
+
         </div>
     )
 }
